@@ -22,3 +22,5 @@ def sort_themes_by_de():
         if get_DE()=='cinnamon':
             if '-cinnamon' in get_theme()[i]: # it can be with De too but this prevent naming theme starting with de name
                 cinnamon_themes.extend([get_theme()[i].split('-cinnamon')[0]])
+    return (cinnamon_themes)
+# write else for unsupoorte DE  
