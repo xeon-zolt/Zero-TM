@@ -1,26 +1,16 @@
 import os
 from Detect_De import * # to detect Desktop Enviourment
 
-theme_list = [] # empty list contaning online themes
+all_theme_list = [] # empty list contaning online themes
 cinnamon_themes = [] # empty list to store cinnamon themes later
-cmd = 'git ls-remote --tags --quiet https://github.com/xeon-zolt/ZeroThemes.git'
-themes = os.popen(cmd).read().strip().splitlines()
-def count_themes():
-    count_themes = 0
-    for i in themes:
-        count_themes = count_themes + 1
-    return count_themes
-def get_theme():
-    number_of_themes = count_themes()
-    for i in range(number_of_themes):
-        theme = (str(themes).split('/tags/')[i+1].split('\'')[0])
-        if theme != 'master':
-            theme_list.extend([theme])
-    return (theme_list)
-def sort_themes_by_de():
-    for i in range(count_themes()):
-        if get_DE()=='cinnamon':
-            if '-cinnamon' in get_theme()[i]: # it can be with De too but this prevent naming theme starting with de name
-                cinnamon_themes.extend([get_theme()[i].split('-cinnamon')[0]])
-    return (cinnamon_themes)
-# write else for unsupoorte DE  
+tags_list = [] # store tags according to DE
+all_theme_get_cmd = 'git ls-remote --tags --quiet https://github.com/xeon-zolt/ZeroThemes.git'
+cinnamon_theme_get_cmd = 'git ls-remote --tags --quiet https://github.com/xeon-zolt/ZeroThemes.git \\*cinnamon '
+
+# all_themes = os.popen(theme_get_cmd).read().strip().splitlines()
+
+def get_cinnamon_themes():
+    cinnamon_themes_raw_list = os.popen(cinnamon_theme_get_cmd).read().strip().splitlines()
+    for i in range(len(cinnamon_themes_raw_list)):
+        cinnamon_themes.extend([str(cinnamon_themes_raw_list[i]).split('/')[2].split('-cinnamon')[0]])
+        tags_list.extend([str(cinnamon_themes_raw_list[i]).split('/')[2]])
